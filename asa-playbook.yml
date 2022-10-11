@@ -1,6 +1,6 @@
 -
   name: Install SFT
-  hosts: <hosts>
+  hosts: prod
   tasks:     
     #INSTALL
     - name: Install Debian
@@ -40,7 +40,7 @@
     - name: Uploading enrollment token
       copy:
         dest: "/var/lib/sftd/enrollment.token"
-        content: "{{ asa_enrollment_token }}"
+        content: "eyJzIjoiYzIxODMzOGMtYWE1ZS00Njg0LWI4ZWQtYzU2NTQ1MGRmOTMyIiwidSI6Imh0dHBzOi8vYXBwLnNjYWxlZnQuY29tIn0="
       become: yes
 
     - name: Restart sftd agent (to enroll server)

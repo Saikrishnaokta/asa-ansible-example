@@ -1,0 +1,20 @@
+- name: install repo
+  apt_repository:
+    repo: deb http://pkg.scaleft.com/deb linux main
+    state: present
+    update_cache: yes
+  become: yes
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Running commands if package is not found in ubuntu
+  command: sudo apt-get install gpg
+  command: curl -fsSL https://dist.scaleft.com/pki/scaleft_deb_key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/scaleft-archive-keyring.gpg > /dev/null
+  command: echo "deb [arch=amd64 signed-by=/usr/share/keyrings/scaleft-archive-keyring.gpg] http://pkg.scaleft.com/deb linux main" | sudo tee -a /etc/apt/sources.list.d/scaleft.list > /dev/null
+- name: Install scaleft-server-tools
+  apt:
+    name: scaleft-server-tools
+    state: present
+    update_cache: true
+  become: yes
+  when: ansible_facts['os_family'] == "Debian"
+
